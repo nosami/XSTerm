@@ -1,0 +1,7 @@
+<AddinProject appVersion="6.0">
+    <Project platforms="Mac">
+        <AddinFile>XSTerm/bin/Debug/XSTerm.dll</AddinFile>
+        <BuildFile>XSTerm.sln</BuildFile>
+        <BuildConfiguration>Debug</BuildConfiguration>
+    </Project>
+</AddinProject>
