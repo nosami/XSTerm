@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionModel>
+	<Runtime>
+	</Runtime>
+	  <Extension path="/MonoDevelop/Ide/Pads">
+      <Pad id="MonoDevelop.XSTerm" defaultPlacement="Bottom" _label="Terminal" icon="md-project" class="XSTerm.XSTerm" />
+  </Extension>
+</ExtensionModel>

@@ -1,0 +1,39 @@
+body {
+    font-size: 1em;
+    color: #111;
+    margin: 0px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#terminal-container {
+    /* width: 800px; */
+    height: 100vh;
+    margin: 0px;
+    /* padding: 2px; */
+}
+
+#terminal-container .terminal {
+    background-color: #333;
+    font-family: source-code-pro; 
+    font-size: 15px;
+    color: #ebdbb2;
+    padding: 2px;
+}
+
+#terminal-container .terminal:focus .terminal-cursor {
+    background-color: #fafafa;
+}
+
+.terminal .xterm-color-7 {
+    color: #ebdbb2;
+}
+
+.terminal .xterm-bg-color-7 {
+    background-color: #ebdbb2;
+}
+.terminal .xterm-viewport {
+    background-color: #282828;
+}
