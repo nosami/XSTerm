@@ -39,8 +39,13 @@ namespace XSTerm
 			webView = new WebView();
 			webView.SetValueForKey(NSObject.FromObject(false), new NSString("drawsBackground"));
 
-			var rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..");
+			var rootPath = AddinManager.CurrentAddin.GetFilePath();
 			var pathToNode = Path.Combine(rootPath, "node");
+			if (!File.Exists(pathToNode)) {
+				// dev
+				rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..");
+				pathToNode = Path.Combine(rootPath, "node");
+			}
 			var pathToApp = Path.Combine(rootPath, "xterm.js", "demo", "app.js");
 			var port = FreeTcpPort();
 			var psi = new ProcessStartInfo
@@ -56,7 +61,7 @@ namespace XSTerm
 			process.EnableRaisingEvents = true;
 			process.OutputDataReceived += (s, e) => {
 				LoggingService.LogInfo(e.Data);
-				if (e.Data.StartsWith("App listening")) Runtime.RunInMainThread(() => webView.MainFrameUrl = $"http://0.0.0.0:{port}");
+				if (e.Data.StartsWith("App listening")) Runtime.RunInMainThread(() => webView.MainFrameUrl = $"http://127.0.0.1:{port}");
 			};
 		}
 
