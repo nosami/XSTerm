@@ -5,7 +5,7 @@ using Mono.Addins.Description;
 [assembly: Addin(
 	"XSTerm",
 	Namespace = "XSTerm",
-	Version = "1.0.1"
+	Version = "1.0.2"
 )]
 
 [assembly: AddinName("XSTerm")]
