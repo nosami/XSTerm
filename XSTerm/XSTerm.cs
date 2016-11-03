@@ -58,7 +58,7 @@ namespace XSTerm
 				CreateNoWindow = true,
 				FileName = pathToNode,
 				RedirectStandardOutput = true,
-				Arguments = $"{pathToApp} {port}"
+				Arguments = $"\"{pathToApp}\" {port}"
 			};
 			var process = Process.Start(psi);
 			process.BeginOutputReadLine();
