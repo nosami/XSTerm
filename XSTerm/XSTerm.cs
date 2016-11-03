@@ -5,6 +5,7 @@ using WebKit;
 using AppKit;
 using CoreGraphics;
 using Foundation;
+using Mono.Unix.Native;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
@@ -46,6 +47,9 @@ namespace XSTerm
 				rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..");
 				pathToNode = Path.Combine(rootPath, "node");
 			}
+			// The MonoDevelop addin downloader loses file permissions. We need execute permission.
+			Syscall.chmod(pathToNode, FilePermissions.S_IRWXU | FilePermissions.S_IRGRP | FilePermissions.S_IROTH);
+
 			var pathToApp = Path.Combine(rootPath, "xterm.js", "demo", "app.js");
 			var port = FreeTcpPort();
 			var psi = new ProcessStartInfo
