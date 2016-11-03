@@ -24,11 +24,6 @@ function setTerminalSize () {
   term.resize(cols, rows);
 }
 
-// colsElement.addEventListener('change', setTerminalSize);
-// rowsElement.addEventListener('change', setTerminalSize);
-
-// optionElements.cursorBlink.addEventListener('change', createTerminal);
-
 createTerminal();
 
 function createTerminal() {
@@ -40,7 +35,7 @@ function createTerminal() {
     cursorBlink: optionElements.cursorBlink.checked
   });
   term.on('resize', function (size) {
-    
+
     if (!pid) {
       return;
     }
@@ -61,9 +56,6 @@ function createTerminal() {
       cols = initialGeometry.cols,
       rows = initialGeometry.rows;
 
-  // colsElement.value = cols;
-  // rowsElement.value = rows;
-
   fetch('/terminals?cols=' + cols + '&rows=' + rows, {method: 'POST'}).then(function (res) {
 
     charWidth = Math.ceil(term.element.offsetWidth / cols);
@@ -73,56 +65,12 @@ function createTerminal() {
       window.pid = pid;
       socketURL += pid;
       socket = new WebSocket(socketURL);
-      socket.onopen = runRealTerminal;
-      // socket.onclose = runFakeTerminal;
-      // socket.onerror = runFakeTerminal;
+      socket.onopen = runTerminal;
     });
   });
 }
 
-
-function runRealTerminal() {
+function runTerminal() {
   term.attach(socket);
   term._initialized = true;
-}
-
-function runFakeTerminal() {
-  if (term._initialized) {
-    return;
-  }
-
-  term._initialized = true;
-
-  var shellprompt = '$ ';
-
-  term.prompt = function () {
-    term.write('\r\n' + shellprompt);
-  };
-
-  term.writeln('Welcome to xterm.js');
-  term.writeln('This is a local terminal emulation, without a real terminal in the back-end.');
-  term.writeln('Type some keys and commands to play around.');
-  term.writeln('');
-  term.prompt();
-
-  term.on('key', function (key, ev) {
-    var printable = (
-      !ev.altKey && !ev.altGraphKey && !ev.ctrlKey && !ev.metaKey
-    );
-
-    // if (ev.keyCode == 13) {
-    //   term.prompt();
-    if (ev.keyCode == 8) {
-     // Do not delete the prompt
-      if (term.x > 2) {
-        term.write('\b');
-      }
-    } else if (printable) {
-      term.write(key);
-    }
-  });
-
-  term.on('paste', function (data, ev) {
-    term.write(data);
-  });
 }
