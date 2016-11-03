@@ -39,7 +39,7 @@ namespace XSTerm
 			webView = new WebView();
 			webView.SetValueForKey(NSObject.FromObject(false), new NSString("drawsBackground"));
 
-			var rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..", "..");
+			var rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..");
 			var pathToNode = Path.Combine(rootPath, "node");
 			var pathToApp = Path.Combine(rootPath, "xterm.js", "demo", "app.js");
 			var port = FreeTcpPort();
