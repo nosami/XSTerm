@@ -1,17 +1,14 @@
 ﻿using System;
-using MonoDevelop.Components;
-using MonoDevelop.Components.Mac;
-using WebKit;
-using AppKit;
-using CoreGraphics;
-using Foundation;
-using Mono.Unix.Native;
-using System.Net.Sockets;
-using System.Net;
-using System.IO;
 using System.Diagnostics;
-using MonoDevelop.Core;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using Foundation;
 using Mono.Addins;
+using Mono.Unix.Native;
+using MonoDevelop.Components;
+using MonoDevelop.Core;
+using WebKit;
 
 namespace XSTerm
 {
@@ -42,7 +39,8 @@ namespace XSTerm
 
 			var rootPath = AddinManager.CurrentAddin.GetFilePath();
 			var pathToNode = Path.Combine(rootPath, "node");
-			if (!File.Exists(pathToNode)) {
+			if (!File.Exists(pathToNode))
+			{
 				// dev
 				rootPath = AddinManager.CurrentAddin.GetFilePath("..", "..");
 				pathToNode = Path.Combine(rootPath, "node");
@@ -63,9 +61,14 @@ namespace XSTerm
 			var process = Process.Start(psi);
 			process.BeginOutputReadLine();
 			process.EnableRaisingEvents = true;
-			process.OutputDataReceived += (s, e) => {
-				LoggingService.LogInfo(e.Data);
-				if (e.Data.StartsWith("App listening")) Runtime.RunInMainThread(() => webView.MainFrameUrl = $"http://127.0.0.1:{port}");
+			process.OutputDataReceived += (s, e) =>
+			{
+				if (!(e.Data == null))
+				{
+					LoggingService.LogInfo("Terminal - " + e.Data);
+					if (e.Data.StartsWith("App listening", StringComparison.Ordinal))
+						Runtime.RunInMainThread(() => webView.MainFrameUrl = $"http://127.0.0.1:{port}");
+				}
 			};
 		}
 
